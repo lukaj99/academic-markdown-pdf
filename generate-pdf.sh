@@ -30,11 +30,14 @@ echo "📄 Output: $OUTPUT_PDF"
     --disable-gpu \
     --print-to-pdf="$OUTPUT_PDF" \
     --print-to-pdf-no-header \
+    --disable-pdf-tagging \
+    --disable-features=VizDisplayCompositor \
     --virtual-time-budget=5000 \
     --run-all-compositor-stages-before-draw \
     --disable-background-timer-throttling \
     --disable-extensions \
     --no-sandbox \
+    --disable-dev-shm-usage \
     "file://$INPUT_PATH"
 
 if [ $? -eq 0 ]; then

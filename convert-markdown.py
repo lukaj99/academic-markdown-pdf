@@ -41,21 +41,32 @@ def convert_markdown_elements(content):
     content = re.sub(r'^## (.*?)$', r'<h2>\1</h2>', content, flags=re.MULTILINE)
     content = re.sub(r'^# (.*?)$', r'<h1>\1</h1>', content, flags=re.MULTILINE)
     
-    # Abstract section (special handling)
-    abstract_pattern = r'<h2>Abstract</h2>\s*\n(.*?)(?=\n<h[12]|\n---|\Z)'
+    # Abstract section (special handling) - include Keywords within abstract
+    abstract_pattern = r'<h2>Abstract</h2>\s*\n(.*?)(?=\n---|\n<h[12]|\Z)'
     def abstract_replacer(match):
         abstract_content = match.group(1).strip()
-        return f'<section class="abstract"><div class="abstract-title">Abstract</div>\n{abstract_content}\n</section>'
+        # Split abstract into proper paragraphs and format each section
+        sections = re.split(r'\n\n+', abstract_content)
+        formatted_sections = []
+        for section in sections:
+            section = section.strip()
+            if section:
+                # Check if this section contains keywords
+                if '**Keywords:**' in section:
+                    # Format keywords specially
+                    keywords_formatted = re.sub(
+                        r'\*\*Keywords:\*\*(.*?)$',
+                        r'<div class="keywords"><strong>Keywords:</strong>\1</div>',
+                        section,
+                        flags=re.DOTALL
+                    )
+                    formatted_sections.append(keywords_formatted)
+                else:
+                    formatted_sections.append(f'<p>{section}</p>')
+        formatted_content = '\n'.join(formatted_sections)
+        return f'<section class="abstract"><div class="abstract-title">Abstract</div>\n{formatted_content}\n</section>'
     
     content = re.sub(abstract_pattern, abstract_replacer, content, flags=re.DOTALL)
-    
-    # Keywords
-    content = re.sub(
-        r'\*\*Keywords:\*\*(.*?)(?=\n\n|\n---|$)',
-        r'<div class="keywords"><strong>Keywords:</strong>\1</div>',
-        content,
-        flags=re.DOTALL
-    )
     
     # Bold and italic (order matters)
     content = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', content)
@@ -121,92 +132,128 @@ def convert_tables(content):
 
 def convert_lists(content):
     """Convert markdown lists to HTML"""
+    # First, let's group consecutive list items together
     lines = content.split('\n')
     result = []
-    in_ul = False
-    in_ol = False
+    i = 0
     
-    for line in lines:
+    while i < len(lines):
+        line = lines[i]
         stripped = line.strip()
         
-        # Unordered list
-        if stripped.startswith('- '):
-            if not in_ul and in_ol:
-                result.append('</ol>')
-                in_ol = False
-            if not in_ul:
-                result.append('<ul>')
-                in_ul = True
-            result.append(f'<li>{stripped[2:]}</li>')
-        
-        # Ordered list
-        elif re.match(r'^\d+\.\s', stripped):
-            if not in_ol and in_ul:
-                result.append('</ul>')
-                in_ul = False
-            if not in_ol:
+        # Check if this is a list item
+        if stripped.startswith('- ') or re.match(r'^\d+\.\s', stripped):
+            # Determine list type
+            is_ordered = re.match(r'^\d+\.\s', stripped)
+            list_items = []
+            
+            # Collect all consecutive list items (allowing blank lines between)
+            while i < len(lines):
+                current_line = lines[i].strip()
+                
+                # If it's a list item of the same type
+                if ((is_ordered and re.match(r'^\d+\.\s', current_line)) or
+                    (not is_ordered and current_line.startswith('- '))):
+                    if is_ordered:
+                        content_match = re.match(r'^\d+\.\s(.+)', current_line)
+                        if content_match:
+                            list_items.append(content_match.group(1))
+                    else:
+                        list_items.append(current_line[2:])
+                    i += 1
+                # If it's a blank line, check if next line is also a list item
+                elif not current_line:
+                    # Look ahead to see if next non-empty line is a list item
+                    j = i + 1
+                    while j < len(lines) and not lines[j].strip():
+                        j += 1
+                    if j < len(lines):
+                        next_line = lines[j].strip()
+                        if ((is_ordered and re.match(r'^\d+\.\s', next_line)) or
+                            (not is_ordered and next_line.startswith('- '))):
+                            i += 1  # Skip the blank line
+                            continue
+                    break
+                else:
+                    break
+            
+            # Generate HTML for the list
+            if is_ordered:
                 result.append('<ol>')
-                in_ol = True
-            content_match = re.match(r'^\d+\.\s(.+)', stripped)
-            if content_match:
-                result.append(f'<li>{content_match.group(1)}</li>')
-        
-        # End lists
-        else:
-            if in_ul:
-                result.append('</ul>')
-                in_ul = False
-            if in_ol:
+                for item in list_items:
+                    result.append(f'<li>{item}</li>')
                 result.append('</ol>')
-                in_ol = False
+            else:
+                result.append('<ul>')
+                for item in list_items:
+                    result.append(f'<li>{item}</li>')
+                result.append('</ul>')
+        else:
             result.append(line)
-    
-    # Close any open lists
-    if in_ul:
-        result.append('</ul>')
-    if in_ol:
-        result.append('</ol>')
+            i += 1
     
     return '\n'.join(result)
 
 def convert_paragraphs(content):
-    """Convert text blocks to paragraphs with proper spacing"""
-    # Split content into blocks by double newlines or more
-    blocks = re.split(r'\n\s*\n+', content)
+    """Convert text blocks to paragraphs with tight academic spacing"""
+    # Split content into lines and process each
+    lines = content.split('\n')
     result = []
     in_section = False
+    i = 0
     
-    for block in blocks:
-        block = block.strip()
-        if not block:
+    while i < len(lines):
+        line = lines[i].strip()
+        
+        # Skip empty lines
+        if not line:
+            result.append('')
+            i += 1
             continue
         
         # Check if this is a section start
-        if block.startswith('<h1>') or block.startswith('<h2>'):
+        if line.startswith('<h1>') or line.startswith('<h2>'):
             in_section = True
-            result.append(block)
-        # Skip if already HTML or special content
-        elif (block.startswith('<') or 
-              block == '---' or 
-              block.startswith('#') or
-              '\n<' in block or
-              block.startswith('|')):  # Also skip tables
-            result.append(block)
-        else:
-            # Split block into individual lines to handle multi-line paragraphs
-            lines = [line.strip() for line in block.split('\n') if line.strip()]
+            result.append(line)
+            i += 1
+            continue
             
-            # If multiple lines, treat as separate paragraphs
-            for i, line in enumerate(lines):
-                if line:
-                    if in_section and i == 0:
-                        result.append(f'<p class="first-paragraph">{line}</p>')
-                        in_section = False
-                    else:
-                        result.append(f'<p>{line}</p>')
+        # Skip if already HTML or special content
+        if (line.startswith('<') or 
+            line == '---' or 
+            line.startswith('#') or
+            line.startswith('|') or
+            re.match(r'^\d+\.\s', line) or  # Skip numbered list items
+            line.startswith('- ')):  # Skip bullet list items
+            result.append(line)
+            i += 1
+            continue
+        
+        # This is bare text that needs to be wrapped in <p> tags
+        # Collect consecutive bare text lines into a paragraph
+        paragraph_lines = []
+        while i < len(lines):
+            current_line = lines[i].strip()
+            if (not current_line or 
+                current_line.startswith('<') or 
+                current_line == '---' or 
+                current_line.startswith('#') or
+                current_line.startswith('|') or
+                re.match(r'^\d+\.\s', current_line) or  # Stop at numbered lists
+                current_line.startswith('- ')):  # Stop at bullet lists
+                break
+            paragraph_lines.append(current_line)
+            i += 1
+        
+        if paragraph_lines:
+            paragraph_text = ' '.join(paragraph_lines)
+            if in_section:
+                result.append(f'<p class="first-paragraph">{paragraph_text}</p>')
+                in_section = False
+            else:
+                result.append(f'<p>{paragraph_text}</p>')
     
-    # Join with extra spacing to ensure proper paragraph separation
-    return '\n\n\n'.join(result)
+    return '\n'.join(result)
 
 def generate_html_template(title, subtitle, content):
     """Generate complete HTML document with academic styling"""
@@ -278,7 +325,7 @@ def generate_html_template(title, subtitle, content):
         /* Page Setup - Clean with no headers/footers */
         @page {{
             size: A4;
-            margin: 25mm 20mm;
+            margin: 32mm 25mm 28mm 25mm;
         }}
 
         /* Reset and Base Typography */
@@ -291,15 +338,15 @@ def generate_html_template(title, subtitle, content):
         body {{
             font-family: 'Gulliver Elsevier', Times, serif;
             font-size: 11pt;
-            line-height: 1.6;
+            line-height: 1.4;
             color: #000000;
             background: #ffffff;
             text-align: justify;
             hyphens: auto;
             orphans: 2;
             widows: 2;
-            word-spacing: 0.02em;
-            letter-spacing: 0.01em;
+            word-spacing: 0.01em;
+            letter-spacing: 0.005em;
         }}
 
         .article {{
@@ -312,9 +359,9 @@ def generate_html_template(title, subtitle, content):
             font-family: 'Gulliver Elsevier Display', serif;
             font-size: 14pt;
             font-weight: 700;
-            line-height: 1.3;
+            line-height: 1.2;
             color: #000000;
-            margin: 24pt 0 16pt 0;
+            margin: 18pt 0 10pt 0;
             text-align: left;
             page-break-after: avoid;
             letter-spacing: -0.01em;
@@ -325,7 +372,7 @@ def generate_html_template(title, subtitle, content):
             font-size: 12pt;
             font-weight: 700;
             color: #1a365d;
-            margin: 20pt 0 10pt 0;
+            margin: 14pt 0 6pt 0;
             text-align: left;
             page-break-after: avoid;
         }}
@@ -415,24 +462,24 @@ def generate_html_template(title, subtitle, content):
 
         /* Content */
         p {{
-            margin-bottom: 16pt;
+            margin-bottom: 8pt;
             text-indent: 0;
-            line-height: 1.6;
+            line-height: 1.4;
         }}
 
         .first-paragraph {{
             text-indent: 0;
-            margin-bottom: 16pt;
+            margin-bottom: 8pt;
         }}
 
         section p + p {{
-            text-indent: 14pt;
-            margin-bottom: 16pt;
+            text-indent: 12pt;
+            margin-bottom: 8pt;
         }}
         
-        /* Add extra spacing between distinct paragraphs */
+        /* Remove extra spacing between paragraphs */
         p + p {{
-            margin-top: 4pt;
+            margin-top: 0pt;
         }}
 
         /* Lists */
@@ -456,21 +503,21 @@ def generate_html_template(title, subtitle, content):
             width: 100%;
             border-collapse: collapse;
             font-size: 9pt;
-            line-height: 1.3;
+            line-height: 1.2;
         }}
 
         th {{
-            background: #f0f0f0;
+            background: #f8f9fa;
             font-weight: 700;
-            padding: 6pt 8pt;
-            border: 1pt solid #ccc;
+            padding: 4pt 6pt;
+            border: 0.5pt solid #bbb;
             text-align: left;
             vertical-align: top;
         }}
 
         td {{
-            padding: 6pt 8pt;
-            border: 1pt solid #ddd;
+            padding: 4pt 6pt;
+            border: 0.5pt solid #ddd;
             vertical-align: top;
         }}
 
