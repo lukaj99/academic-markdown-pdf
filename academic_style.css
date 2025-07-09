@@ -1,56 +1,56 @@
 /* Load Gulliver Elsevier Fonts */
 @font-face {
     font-family: 'Gulliver Elsevier';
-    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Regular-Text.otf') format('opentype');
+    src: url('./assets/fonts/elsevier-fonts/Gulliver-Elsevier-Regular-Text.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Gulliver Elsevier';
-    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Text.otf') format('opentype');
+    src: url('./assets/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Text.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Gulliver Elsevier';
-    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Italic-Text.otf') format('opentype');
+    src: url('./assets/fonts/elsevier-fonts/Gulliver-Elsevier-Italic-Text.otf') format('opentype');
     font-weight: 400;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Gulliver Elsevier';
-    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Italic-Text.otf') format('opentype');
+    src: url('./assets/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Italic-Text.otf') format('opentype');
     font-weight: 700;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'Gulliver Elsevier Display';
-    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Regular-Display.otf') format('opentype');
+    src: url('./assets/fonts/elsevier-fonts/Gulliver-Elsevier-Regular-Display.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Gulliver Elsevier Display';
-    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Display.otf') format('opentype');
+    src: url('./assets/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Display.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Gulliver Elsevier Caption';
-    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Regular-Caption.otf') format('opentype');
+    src: url('./assets/fonts/elsevier-fonts/Gulliver-Elsevier-Regular-Caption.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Gulliver Elsevier Caption';
-    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Caption.otf') format('opentype');
+    src: url('./assets/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Caption.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
 }
