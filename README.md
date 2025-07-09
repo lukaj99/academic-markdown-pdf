@@ -31,13 +31,18 @@ Your beautifully formatted PDF is ready.
 
 ```
 ├── markdown-to-pdf.sh          # Main automation script
-├── convert-markdown.py         # Markdown → HTML converter  
+├── convert-markdown.py         # Markdown → HTML converter (uses python-markdown library)
+├── academic_style.css          # CSS stylesheet for HTML output
 ├── generate-pdf.sh            # HTML → PDF generator
 ├── markdown-to-academic-pdf-guide.md  # Complete documentation
 ├── demo.md                    # Example markdown
 ├── Demo_Academic_Paper.pdf    # Example output
 └── README.md                  # This file
 ```
+
+## ✨ Core Technology
+
+The `convert-markdown.py` script now uses the robust **`python-markdown` library** for parsing Markdown text, ensuring compatibility with a wide range of Markdown features and extensions (footnotes, tables, code highlighting, etc.). Styling is handled by an external CSS file (`academic_style.css`), allowing for easier customization.
 
 ## 📝 Markdown Format Guide
 
@@ -130,7 +135,10 @@ Your content here...
 ### Step-by-Step (Advanced)
 ```bash
 # 1. Markdown to HTML
+# Default styling:
 python3 convert-markdown.py paper.md paper.html
+# Custom styling:
+python3 convert-markdown.py paper.md paper.html --css mystyles.css
 
 # 2. HTML to PDF  
 ./generate-pdf.sh paper.html paper.pdf
@@ -158,18 +166,13 @@ python3 convert-markdown.py paper.md paper.html
 
 ## 🛠️ Customization Options
 
-### Font Paths
-Edit `convert-markdown.py` to change font locations:
-```python
-src: url('/your/path/to/Gulliver-Elsevier-Regular-Text.otf')
-```
-
-### Styling  
-Modify CSS in the template for:
-- Color schemes
-- Spacing adjustments
-- Font sizes
-- Page margins
+### Styling & Fonts
+- **Primary method:** Modify the `academic_style.css` file to change fonts, colors, spacing, margins, etc.
+  - Font paths (e.g., `src: url(...)` for Gulliver fonts) are defined in `academic_style.css`. Update these paths if your fonts are located elsewhere or if you wish to use different fonts.
+- **Alternative CSS:** Provide your own CSS file using the `--css` option in `convert-markdown.py`:
+  ```bash
+  python3 convert-markdown.py your-paper.md your-paper.html --css custom_style.css
+  ```
 
 ### PDF Settings
 Adjust Chrome parameters in `generate-pdf.sh`:
