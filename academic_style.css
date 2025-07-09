@@ -1,0 +1,333 @@
+/* Load Gulliver Elsevier Fonts */
+@font-face {
+    font-family: 'Gulliver Elsevier';
+    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Regular-Text.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gulliver Elsevier';
+    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Text.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gulliver Elsevier';
+    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Italic-Text.otf') format('opentype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Gulliver Elsevier';
+    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Italic-Text.otf') format('opentype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Gulliver Elsevier Display';
+    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Regular-Display.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gulliver Elsevier Display';
+    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Display.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gulliver Elsevier Caption';
+    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Regular-Caption.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gulliver Elsevier Caption';
+    src: url('/Users/lukaj/GulliverFonts/fonts/elsevier-fonts/Gulliver-Elsevier-Bold-Caption.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* Page Setup - Clean with no headers/footers */
+@page {
+    size: A4;
+    margin: 32mm 25mm 28mm 25mm;
+}
+
+/* Reset and Base Typography */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Gulliver Elsevier', Times, serif;
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #000000;
+    background: #ffffff;
+    text-align: justify;
+    hyphens: auto;
+    orphans: 2;
+    widows: 2;
+    word-spacing: 0.01em;
+    letter-spacing: 0.005em;
+}
+
+.article {
+    max-width: 210mm;
+    margin: 0 auto;
+}
+
+/* Typography Hierarchy */
+h1 {
+    font-family: 'Gulliver Elsevier Display', serif;
+    font-size: 14pt;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #000000;
+    margin: 18pt 0 10pt 0;
+    text-align: left;
+    page-break-after: avoid;
+    letter-spacing: -0.01em;
+}
+
+h2 {
+    font-family: 'Gulliver Elsevier', serif;
+    font-size: 12pt;
+    font-weight: 700;
+    color: #1a365d;
+    margin: 14pt 0 6pt 0;
+    text-align: left;
+    page-break-after: avoid;
+}
+
+h3 {
+    font-family: 'Gulliver Elsevier', serif;
+    font-size: 11pt;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 16pt 0 8pt 0;
+    text-align: left;
+    page-break-after: avoid;
+}
+
+h4 {
+    font-family: 'Gulliver Elsevier', serif;
+    font-size: 10pt;
+    font-weight: 700;
+    color: #4a5568;
+    margin: 14pt 0 6pt 0;
+    text-align: left;
+    page-break-after: avoid;
+    font-style: italic;
+}
+
+/* Title Page */
+.title-page {
+    text-align: center;
+    margin-bottom: 32pt;
+    page-break-after: avoid;
+}
+
+.main-title {
+    font-family: 'Gulliver Elsevier Display', serif;
+    font-size: 16pt;
+    font-weight: 700;
+    line-height: 1.4;
+    color: #000000;
+    margin-bottom: 20pt;
+    letter-spacing: -0.02em;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.subtitle {
+    font-family: 'Gulliver Elsevier', serif;
+    font-size: 11pt;
+    font-weight: 400;
+    color: #4a5568;
+    font-style: italic;
+    margin-bottom: 32pt;
+    line-height: 1.5;
+}
+
+/* Abstract */
+.abstract {
+    background: #f8f9fa;
+    border-left: 2pt solid #1a365d;
+    padding: 16pt 20pt;
+    margin: 20pt 0 28pt 0;
+    font-size: 10pt;
+    line-height: 1.5;
+    page-break-inside: avoid;
+}
+
+.abstract-title {
+    font-family: 'Gulliver Elsevier', serif;
+    font-size: 9pt;
+    font-weight: 700;
+    color: #1a365d;
+    margin-bottom: 12pt;
+    text-transform: uppercase;
+    letter-spacing: 1pt;
+}
+
+.keywords {
+    margin-top: 12pt;
+    font-size: 9pt;
+    color: #666;
+}
+
+.keywords strong {
+    font-weight: 700;
+    color: #333;
+}
+
+/* Content */
+p {
+    margin-bottom: 8pt;
+    text-indent: 0;
+    line-height: 1.4;
+}
+
+.first-paragraph {
+    text-indent: 0;
+    margin-bottom: 8pt;
+}
+
+section p + p {
+    text-indent: 12pt;
+    margin-bottom: 8pt;
+}
+
+/* Remove extra spacing between paragraphs */
+p + p {
+    margin-top: 0pt;
+}
+
+/* Lists */
+ul, ol {
+    margin: 10pt 0 12pt 20pt;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 6pt;
+    line-height: 1.5;
+}
+
+/* Tables */
+.table-container {
+    margin: 16pt 0;
+    page-break-inside: avoid;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    line-height: 1.2;
+}
+
+th {
+    background: #f8f9fa;
+    font-weight: 700;
+    padding: 4pt 6pt;
+    border: 0.5pt solid #bbb;
+    text-align: left;
+    vertical-align: top;
+}
+
+td {
+    padding: 4pt 6pt;
+    border: 0.5pt solid #ddd;
+    vertical-align: top;
+}
+
+/* Blockquotes */
+blockquote {
+    margin: 12pt 0;
+    padding: 8pt 16pt;
+    border-left: 2pt solid #ddd;
+    font-style: italic;
+    background: #fafafa;
+    page-break-inside: avoid;
+}
+
+blockquote p {
+    margin-bottom: 6pt;
+}
+
+/* Emphasis */
+strong, b {
+    font-weight: 700;
+}
+
+em, i {
+    font-style: italic;
+}
+
+.statistic {
+    font-weight: 700;
+    color: #d63384;
+}
+
+/* Section Separators */
+.section-separator {
+    border: none;
+    height: 0.5pt;
+    background: #d0d0d0;
+    margin: 28pt 0;
+}
+
+/* Page Breaks */
+.page-break {
+    page-break-before: always;
+}
+
+.avoid-break {
+    page-break-inside: avoid;
+}
+
+/* Print Optimizations */
+@media print {
+    body {
+        font-size: 10.5pt;
+        line-height: 1.5;
+    }
+
+    .main-title {
+        font-size: 15pt;
+    }
+
+    h1 { font-size: 13pt; }
+    h2 { font-size: 11.5pt; }
+    h3 { font-size: 10.5pt; }
+    h4 { font-size: 9.5pt; }
+
+    .abstract {
+        font-size: 9.5pt;
+    }
+
+    table {
+        font-size: 8.5pt;
+    }
+
+    p {
+        margin-bottom: 11pt;
+    }
+
+    section p + p {
+        text-indent: 13pt;
+    }
+}

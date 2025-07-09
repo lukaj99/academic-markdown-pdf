@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Awesome Academic Paper</title>
+    <link rel="stylesheet" href="academic_style.css">
+    <!--
+    To enable MathJax for LaTeX-style math rendering, uncomment the following lines:
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true,
+                processEnvironments: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+    -->
+</head>
+<body>
+    <article class="article">
+        <header class="title-page">
+            <h1 class="main-title">My Awesome Academic Paper</h1>
+            <p class="subtitle">An In-depth Study of Markdown Conversion</p>
+        </header>
+
+
+        <section class="abstract">
+            <div class="abstract-title">Abstract</div>
+            <p>This paper explores the conversion of Markdown to HTML, focusing on academic requirements. We discuss various elements and their desired output.
+Our methods involve using the <code>python-markdown</code> library.</p>
+<p><strong>Results:</strong> The conversion is largely successful, producing well-structured HTML.
+Further work could involve more advanced citation management.</p>
+<p><strong>Conclusions:</strong> The refactored script offers a robust solution.</p>
+
+            <div class="keywords"><strong>Keywords:</strong> Markdown, HTML, Academic Publishing, Python, <code>python-markdown</code></div>
+
+        </section>
+        <h2 id="1-introduction">1. Introduction</h2>
+<p>This is the first paragraph of the introduction. It contains some important initial thoughts. We expect a <span class="statistic">75%</span> improvement in processing time and a $10 million grant.</p>
+<p>This is the second paragraph, which should be indented in the final output if using the default CSS.</p>
+<h3 id="11-background">1.1. Background</h3>
+<p>A sub-section detailing the background of this research. Markdown is a lightweight markup language.</p>
+<h4 id="111-prior-art">1.1.1. Prior Art</h4>
+<p>Even deeper, discussing previous work.</p>
+<h2 id="2-methods">2. Methods</h2>
+<p>We used several methods to achieve our results.</p>
+<ul>
+<li>Bullet point one.</li>
+<li>Bullet point two.<ul>
+<li>Nested bullet point.</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>Numbered item one.</li>
+<li>Numbered item two.<ol>
+<li>Nested numbered item.</li>
+</ol>
+</li>
+</ol>
+<h3 id="21-data-collection">2.1. Data Collection</h3>
+<p>Details about how data was collected. This includes a footnote.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></p>
+<hr class="section-separator" />
+<h2 id="3-results">3. Results</h2>
+<p>The results were promising.</p>
+<blockquote>
+<p>This is a blockquote, highlighting a key finding or statement.</p>
+</blockquote>
+<p>We also included a table:</p>
+<div class="table-container"><table>
+<thead>
+<tr>
+<th>Header 1</th>
+<th>Header 2</th>
+<th>Header 3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data A1</td>
+<td>Data B1</td>
+<td>Data C1</td>
+</tr>
+<tr>
+<td>Data A2</td>
+<td>Data B2</td>
+<td>Data C2</td>
+</tr>
+<tr>
+<td>Data A3</td>
+<td>Data B3</td>
+<td><span class="statistic">100%</span></td>
+</tr>
+</tbody>
+</table></div>
+<p>And a Python code block:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">greet</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;This function greets the person passed in as a parameter&quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hello, </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">!&quot;</span><span class="p">)</span>
+
+<span class="n">greet</span><span class="p">(</span><span class="s2">&quot;World&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Let&rsquo;s also test some inline math: $E = mc^<span class="statistic">2$</span>. And display math:
+$$
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+$$</p>
+<p>The script processes approximately 1,000,000 lines per second.</p>
+<h2 id="4-discussion">4. Discussion</h2>
+<p>Further discussion of the results.</p>
+<p><strong>Emphasis:</strong> <em>italic</em>, <strong>bold</strong>, and <strong><em>bold-italic</em></strong>.
+Abbreviations: <abbr title="HyperText Markup Language">HTML</abbr> is a HyperText Markup Language.</p>
+<hr class="section-separator" />
+<h2 id="5-conclusion">5. Conclusion</h2>
+<p>The final wrap-up.
+The project achieved a <span class="statistic">90%</span> success rate.
+This cost about $500.
+The team size was 5 members.
+It took 6 months.
+The impact is over <span class="statistic">1 billion</span> users.</p>
+<div class="footnote">
+<hr class="section-separator" />
+<ol>
+<li id="fn:1">
+<p>This is the content of the footnote.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+    </article>
+</body>
+</html>
